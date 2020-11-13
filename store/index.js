@@ -1,7 +1,8 @@
 export const state = () => ({
     categories: [],
     sections: [],
-    articles: []
+    articles: [],
+    cohort: null
 });
 
 export const mutations = {
@@ -13,11 +14,19 @@ export const mutations = {
     },
     updateArticles: (state, data) => {
         state.articles = data;
+    },
+    setCohort: (state, data) => {
+      state.cohort = data;
     }
 };
 
 export const actions = {
+    async getCohort({ state, commit }) {
+      const cohort = Math.random() > 0.5 ? 'A' : 'B';
+      commit('setCohort', cohort);
+    },
     async getCategoryData({ state, commit }) {
+      console.log('RUNNING');
       if (state.categories.length) return
       try {
         await fetch('https://help.hotjar.com/api/v2/help_center/categories')

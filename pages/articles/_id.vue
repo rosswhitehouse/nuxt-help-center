@@ -1,13 +1,13 @@
 <template>
     <div>
+        <div v-if="cohort === 'A'">A</div>
+        <div v-if="cohort === 'B'">B</div>
         <h1>{{ currentArticle.name }}</h1>
         <div v-html="currentArticle.body"></div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
     data() {
         return {
@@ -15,12 +15,14 @@ export default {
         }
     },
     computed: {
-        ...mapState(['articles']),
+        cohort() {
+            return this.$store.state.cohort;
+        },
         currentArticle() {
             let result;
-            for (let i = 0; i < this.articles.length; i++) {
-                if (this.articles[i].id.toString() === this.id.split('-')[0]) {
-                    result = this.articles[i];
+            for (let i = 0; i < this.$store.state.articles.length; i++) {
+                if (this.$store.state.articles[i].id.toString() === this.id.split('-')[0]) {
+                    result = this.$store.state.articles[i];
                     break;
                 }
             }
